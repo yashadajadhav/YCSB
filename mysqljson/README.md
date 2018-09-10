@@ -74,7 +74,7 @@ Before you can actually run the workload, you need to "load" the data first.
 bin/ycsb load mysqljson -P workloads/workloada -P db.properties -cp mysql-connector-java.jar
 ```
 
-Then, you can run the workload [NOT IMPLEMENTED YET]:
+Then, you can run the workload :
 
 ```sh
 bin/ycsb run mysqljson -P workloads/workloada -P db.properties -cp mysql-connector-java.jar
