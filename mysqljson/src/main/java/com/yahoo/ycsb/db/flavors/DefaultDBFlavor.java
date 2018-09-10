@@ -67,14 +67,7 @@ public class DefaultDBFlavor extends DBFlavor {
     String[] fieldKeys = updateType.getFieldString().split(",");
     StringBuilder update = new StringBuilder("UPDATE ");
     update.append(updateType.getTableName());
-    update.append(" SET ");
-    for (int i = 0; i < fieldKeys.length; i++) {
-      update.append(fieldKeys[i]);
-      update.append("=?");
-      if (i < fieldKeys.length - 1) {
-        update.append(", ");
-      }
-    }
+    update.append(" SET FIELD0 = ? ");
     update.append(" WHERE ");
     update.append(JdbcDBClient.PRIMARY_KEY);
     update.append(" = ?");

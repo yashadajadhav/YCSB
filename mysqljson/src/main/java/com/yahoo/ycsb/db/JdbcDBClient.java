@@ -401,11 +401,25 @@ public class JdbcDBClient extends DB {
       if (updateStatement == null) {
         updateStatement = createAndCacheUpdateStatement(type, key);
       }
-      int index = 1;
-      for (String value: fieldInfo.getFieldValues()) {
-        updateStatement.setString(index++, value);
+      
+      Map<String, String> fieldMap = new HashMap<String, String>();
+      
+      int i = 0;
+      for (String fieldName : values.keySet()) {  
+        fieldMap.put(fieldName, fieldInfo.getFieldValues().get(i));
+        i++;
       }
-      updateStatement.setString(index, key);
+      
+      String objectMapper="";
+      try {
+        objectMapper = new ObjectMapper().writeValueAsString(fieldMap);
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
+      
+      updateStatement.setString(1, objectMapper);     
+      updateStatement.setString(2, key);
+      
       int result = updateStatement.executeUpdate();
       if (result == 1) {
         return Status.OK;
@@ -446,15 +460,7 @@ public class JdbcDBClient extends DB {
         e.printStackTrace();
       }
       
-      int index = 2;
-      for (String value: fieldInfo.getFieldValues()) {
-        insertStatement.setString(2, objectMapper);
-        
-      }
-      
-      
-      
-      
+      insertStatement.setString(2, objectMapper);
       
       //String objectMapper = new ObjectMapper().writeValueAsString(crunchifyMap);
       
